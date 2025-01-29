@@ -25,15 +25,15 @@ public class BookstoreApplication {
 		return (args) -> {
 			log.info("save a couple of books");
 			repository.save(new Book("Java", "Tuomo Savolainen", "1234-5678", 2025, 55.55));
-			//repository.save(new Book());
-			//repository.save(new Book());
+			repository.save(new Book("Backend", "Tuomo Savolainen", "6789-2345", 2021, 14.95));
+			repository.save(new Book("C++ perusteet", "Kimmo Koodari", "1010-1010", 2005, 19.95));
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
 				log.info(book.toString());
 			}
 
-			log.info("haetaan kirjoja nimellä");
+			log.info("haetaan kirjoja nimellä Java");
 			for (Book book : repository.findByTitle("Java")) {
 				log.info(book.toString());
 			}
