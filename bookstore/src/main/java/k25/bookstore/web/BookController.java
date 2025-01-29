@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BookController {
 
     @GetMapping("/index")
-    public String book(Model model) {
-        System.out.println("Tämä on kirjakauppa.");
-        return "index";
+    //public String book(Model model) {
+        //return "index";
+        // }
+        public String index() {
+            return "Tämä on kirjakauppa.";
+        }
     }
     
-}
