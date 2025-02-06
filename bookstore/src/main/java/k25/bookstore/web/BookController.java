@@ -19,7 +19,7 @@ import k25.bookstore.domain.Book;
 public class BookController {
 
     @Autowired
-    private BookRepository brepository;
+    private BookRepository repository;
 
     @Autowired
     private CategoryRepository crepository;
@@ -27,7 +27,7 @@ public class BookController {
     //Show all books
     @GetMapping("/booklist")
     public String bookList(Model model) {
-        model.addAttribute("books", brepository.findAll());
+        model.addAttribute("books", repository.findAll());
         return "booklist";
     }
     
@@ -42,21 +42,21 @@ public class BookController {
     //Save new book
     @PostMapping("/save")
     public String save(Book book) {
-        brepository.save(book);
+        repository.save(book);
         return "redirect:booklist";
     }
     
     //Delete book
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
-        brepository.deleteById(bookId);
+        repository.deleteById(bookId);
         return "redirect:../booklist";
     }
 
     //Edit book
     @GetMapping("/edit/{id}")
     public String editBook(@PathVariable("id") Long bookId, Model model) {
-        model.addAttribute("book", brepository.findById(bookId));
+        model.addAttribute("book", repository.findById(bookId));
         model.addAttribute("categories", crepository.findAll());
         return "editbook";
     }
