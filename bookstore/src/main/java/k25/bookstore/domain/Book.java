@@ -1,15 +1,22 @@
 package k25.bookstore.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title, author, isbn;
+    private String author, isbn;
     private int publicationYear;
     private double price;
+
+    @NotEmpty(message = "Book's title can't be empty.")
+    @Size(min = 2, max = 250)
+    private String title;
+
 
     @ManyToOne
     @JoinColumn(name = "categoryid")
