@@ -24,7 +24,7 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
 		return (args) -> {
 			log.info("save a couple of books");
 
@@ -36,18 +36,18 @@ public class BookstoreApplication {
 			crepository.save(category2);
 			crepository.save(category3);
 
-			brepository.save(new Book("Java", "Tuomo Savolainen", "1234-5678", 2025, 55.55, category1));
-			brepository.save(new Book("Backend", "Tuomo Savolainen", "6789-2345", 2021, 14.95, category1));
-			brepository.save(new Book("C++ perusteet", "Kimmo Koodari", "1010-1010", 2005, 19.95, category1));
-			brepository.save(new Book("Taru Sormusten Herrasta", "J. R. R. Tolkien", "1337-7331", 1954, 99.95, category2));
+			repository.save(new Book("Java", "Tuomo Savolainen", "1234-5678", 2025, 55.55, category1));
+			repository.save(new Book("Backend", "Tuomo Savolainen", "6789-2345", 2021, 14.95, category1));
+			repository.save(new Book("C++ perusteet", "Kimmo Koodari", "1010-1010", 2005, 19.95, category1));
+			repository.save(new Book("Taru Sormusten Herrasta", "J. R. R. Tolkien", "1337-7331", 1954, 99.95, category2));
 
 			log.info("fetch all books");
-			for (Book book : brepository.findAll()) {
+			for (Book book : repository.findAll()) {
 				log.info(book.toString());
 			}
 
 			log.info("haetaan kirjoja nimellä Java");
-			for (Book book : brepository.findByTitle("Java")) {
+			for (Book book : repository.findByTitle("Java")) {
 				log.info(book.toString());
 			}
 		
