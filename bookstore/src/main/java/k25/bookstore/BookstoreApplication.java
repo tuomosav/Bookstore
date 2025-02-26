@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import k25.bookstore.domain.AppUser;
+import k25.bookstore.domain.AppUserRepository;
 import k25.bookstore.domain.Book;
 import k25.bookstore.domain.BookRepository;
 import k25.bookstore.domain.Category;
@@ -24,7 +26,7 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository, AppUserRepository aurepository) {
 		return (args) -> {
 			log.info("save a couple of books");
 
@@ -41,6 +43,12 @@ public class BookstoreApplication {
 			repository.save(new Book("C++ perusteet", "Kimmo Koodari", "1010-1010", 2005, 19.95, category1));
 			repository.save(new Book("Taru Sormusten Herrasta", "J. R. R. Tolkien", "1337-7331", 1954, 99.95, category2));
 
+			//Luodaan käyttäjiä: admin/admin , user/user
+			AppUser user1 = new AppUser("user", "$2a$10$myvtgbh8XXeQISLXD/qKf.V1RhkX2aWi/MeFbmli.h6rxQQwgvtpy", "user@email.com", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$/6t0t59glyl56NbvbJrb7OR9rgFjnwO5pyoj7.gNUFKKQDS3wKe9W", "admin@email.com", "ADMIN");
+			aurepository.save(user1);
+			aurepository.save(user2);
+			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
 				log.info(book.toString());

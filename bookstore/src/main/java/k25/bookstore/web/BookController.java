@@ -1,6 +1,6 @@
 package k25.bookstore.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +24,20 @@ import k25.bookstore.domain.Book;
 @Controller
 public class BookController {
 
-    @Autowired
     private BookRepository repository;
 
-    @Autowired
     private CategoryRepository crepository;
+
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
+        this.repository = bookRepository;
+        this.crepository = categoryRepository;
+    }
+
+    //Show login
+    @RequestMapping(value="/login")
+    public String login() {
+        return "login";
+    }
 
     //Show all books
     @GetMapping("/booklist")
@@ -38,6 +47,7 @@ public class BookController {
     }
     
     //Add new book
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/addbook")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
@@ -60,6 +70,7 @@ public class BookController {
     }
     
     //Delete book
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
         repository.deleteById(bookId);
@@ -67,6 +78,7 @@ public class BookController {
     }
 
     //Edit book
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         model.addAttribute("book", repository.findById(bookId));
